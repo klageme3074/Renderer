@@ -1,6 +1,7 @@
 #pragma once
 
 #include <intrin.h>
+#include <math.h>
 #include "CoreDefinition.h"
 
 struct Math

@@ -78,8 +78,7 @@ add_library(${PROJECT_NAME} STATIC ${ALL_FILES_REL})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
     OUTPUT_NAME ${PROJECT_NAME}
-    #LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Output/Win64/Library
-	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Output/Win64/Library)
+	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Output/Windows/Library)
 	
 
 ################################################################################

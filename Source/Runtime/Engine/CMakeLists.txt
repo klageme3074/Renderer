@@ -52,6 +52,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/Public
     ${PROJECT_SOURCE_DIR}/ThirdParty
     ${RUNTIME_MODULE_DIR}/Math/Public
+    ${RUNTIME_MODULE_DIR}/Renderer/Public
 	)
 
 
@@ -79,13 +80,12 @@ add_library(${PROJECT_NAME} STATIC ${ALL_FILES_REL})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     PREFIX ""
     OUTPUT_NAME ${PROJECT_NAME}
-    #LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Output/Win64/Library
-	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Output/Win64/Library)
+	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Output/Windows/Library)
 	
 
 ################################################################################
 # Import Library
 ################################################################################
-target_link_libraries(${PROJECT_NAME} MathModule)
+target_link_libraries(${PROJECT_NAME} MathModule RendererModule)
 
 

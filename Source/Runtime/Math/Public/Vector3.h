@@ -6,8 +6,7 @@ struct Vector3
 {
 public:
 	Vector3() { }
-	FORCEINLINE Vector3(const Vector2& InV, bool IsPoint = true) 
-		: X(InV.X), Y(InV.Y) { Z = IsPoint ? 1.f : 0.f; }
+	FORCEINLINE Vector3(const Vector2& InV, bool IsPoint = true) : X(InV.X), Y(InV.Y) { Z = IsPoint ? 1.f : 0.f; }
 	constexpr FORCEINLINE Vector3(float InX, float InY, float InZ) : X(InX), Y(InY), Z(InZ) { }
 
 	FORCEINLINE Vector3 Cross(const Vector3& InV) const;
@@ -31,6 +30,7 @@ public:
 	FORCEINLINE Vector3 operator+(const Vector3& InV) const;
 	FORCEINLINE Vector3 operator-(const Vector3& InV) const;
 	FORCEINLINE Vector3& operator+=(const Vector3& InV);
+	FORCEINLINE Vector3& operator/=(const float InV);
 
 	static const Vector3 UnitX;
 	static const Vector3 UnitY;
@@ -83,6 +83,14 @@ FORCEINLINE Vector3& Vector3::operator+=(const Vector3& InV)
 	X += InV.X;
 	Y += InV.Y;
 	Z += InV.Z;
+	return *this;
+}
+
+FORCEINLINE Vector3& Vector3::operator/=(const float InV)
+{
+	X /= InV;
+	Y /= InV;
+	Z /= InV;
 	return *this;
 }
 

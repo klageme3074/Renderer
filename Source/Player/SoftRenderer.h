@@ -1,57 +1,78 @@
 #pragma once
 
-#include "WindowsRSI.h"
-#include "InputManager.h"
+#include <memory>
+#include <functional>
+#include "InputManager.h" 
+#include "SoftRendererImpl2D.h"
+#include "SoftRendererImpl3D.h"
 
 class SoftRenderer
 {
 public:
-	enum class RenderMode
-	{
-		TWO,
-		THREE_PERSP
-	};
-
-	SoftRenderer(SoftRenderer const&) = delete;
-	void operator=(SoftRenderer const&) = delete;
-	static SoftRenderer& Inst()
-	{
-		static SoftRenderer instance;
-		return instance;
-	}
+	SoftRenderer(RenderingSoftwareInterface* InRSI);
 
 public:
-	InputManager& GetInputManager() { return InputManager; }
+	const ScreenPoint& GetScreenSize() { return CurrentScreenSize; }
 
 public:
-	void SetRenderMode(RenderMode InRenderMode) { CurrentRenderMode = InRenderMode; }
-	RenderMode GetRenderMode() const { return CurrentRenderMode; }
-	void Initialize();
+	void OnTick();
+	void OnResize(const ScreenPoint& InNewScreenSize);
 	void Shutdown();
-	void Update();
-
-	void PreUpdate();
-	void PostUpdate();
 
 	float GetFrameFPS() const { return FrameFPS; }
-	float GetAverageFPS() const { return FrameCount == 0 ? 0.0f : FrameCount / ElapsedTime; }
 	float GetElapsedTime() const { return ElapsedTime; }
-	int GetFrameCount() const { return FrameCount; }
+
+public:
+	// Delegates
+	std::function<float()> PerformanceInitFunc;
+	std::function<long long()> PerformanceMeasureFunc;
+
+	// Input Manager
+	InputManager& GetInputManager() { return InputManager; }
 
 private:
-	SoftRenderer() { }
-	~SoftRenderer() { Shutdown(); }
+	FORCEINLINE void BindImplClass();
 
-	double MilliSecFrequency = 0;
-	double FrameMilliSec = 0;
-	__int64 StartFrameSec = 0;
-	float FrameSec = 0;
-	float FrameFPS = 0;
-	float ElapsedTime = 0;
-	int FrameCount = 0;
+	FORCEINLINE void PreUpdate();
+	FORCEINLINE void PostUpdate();
+	FORCEINLINE void Update();
+	FORCEINLINE void RenderFrame();
 
-	RenderMode CurrentRenderMode = RenderMode::TWO;
+private:
+	// Variable to detect initialization
+	bool IsPerformanceCheckInitialized = false;
+	bool IsRendererInitialized = false;
+	bool IsInputInitialized = false;
+	bool IsImplBinded = false;
+	bool IsAllInitialized = false;
 
+	// Screen Size
+	ScreenPoint CurrentScreenSize;
+
+	// Performace counter
+	long long StartTimeStamp = 0;
+	long long FrameTimeStamp = 0;
+	long FrameCount = 0;
+	float CyclesPerMilliSeconds = 0.f;
+	float FrameTime = 0.f;
+	float ElapsedTime = 0.f;
+	float AverageFPS = 0.f;
+	float FrameFPS = 0.f;
+	
+	// Renderer Interface
+	std::unique_ptr<RenderingSoftwareInterface> RSI;
+
+	// Renderer Implement Class
+	friend class SoftRendererImpl2D;
+	friend class SoftRendererImpl3D;
+
+	std::unique_ptr<SoftRendererImpl2D> Impl2D;
+	std::unique_ptr<SoftRendererImpl3D> Impl3D;
+
+	// Impl Functions for Rendering Logic
+	std::function<void()> RenderFrameFunc;
+	std::function<void(float DeltaSeconds)> UpdateFunc;
+
+	// Input Manager
 	InputManager InputManager;
-	RenderingSoftwareInterface* RSI = nullptr;
 };

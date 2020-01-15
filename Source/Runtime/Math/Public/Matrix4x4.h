@@ -11,9 +11,6 @@ public:
 	Matrix4x4(const Vector4& InCol0, const Vector4& InCol1, const Vector4& InCol2, const Vector4& InCol3);
 
 	FORCEINLINE void SetIdentity();
-	//FORCEINLINE void SetRotationXYZ(const Vector3& InRotationEuler);
-	FORCEINLINE void SetScaleXYZ(const Vector3& InScale);
-	FORCEINLINE void SetTranslationXYZ(const Vector3& InTranslation);
 	FORCEINLINE Matrix4x4 Tranpose() const;
 
 	FORCEINLINE const Vector4& operator[](int InIndex) const;
@@ -46,29 +43,6 @@ FORCEINLINE void Matrix4x4::SetIdentity()
 	Cols[1] = Vector4::UnitY;
 	Cols[2] = Vector4::UnitZ;
 	Cols[3] = Vector4::UnitW;
-}
-
-//FORCEINLINE void Matrix4x4::SetRotationXYZ(const Vector3& InRotationEuler)
-//{
-//	//Cols[0] = Vector3(cosf(InRadian), sinf(InRadian), 0);
-//	//Cols[1] = Vector3(-sinf(InRadian), cosf(InRadian), 0);
-//	//Cols[2] = Vector3::UnitZ;
-//}
-
-FORCEINLINE void Matrix4x4::SetScaleXYZ(const Vector3& InScale)
-{
-	Cols[0] = Vector4::UnitX * InScale.X;
-	Cols[1] = Vector4::UnitY * InScale.Y;
-	Cols[2] = Vector4::UnitZ * InScale.Z;
-	Cols[3] = Vector4::UnitW;
-}
-
-FORCEINLINE void Matrix4x4::SetTranslationXYZ(const Vector3& InTranslation)
-{
-	Cols[0] = Vector4::UnitX;
-	Cols[1] = Vector4::UnitY;
-	Cols[2] = Vector4::UnitZ;
-	Cols[3] = Vector4(InTranslation.X, InTranslation.Y, InTranslation.Z, 1);
 }
 
 FORCEINLINE Matrix4x4 Matrix4x4::Tranpose() const

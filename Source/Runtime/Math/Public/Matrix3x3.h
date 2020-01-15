@@ -10,10 +10,6 @@ public:
 	Matrix3x3(float In00, float In01, float In02, float In10, float In11, float In12, float In20, float In21, float In22);
 
 	FORCEINLINE void SetIdentity();
-	FORCEINLINE void SetRotationXY(float InRadian);
-	FORCEINLINE void SetScaleXY(const Vector2& InScale);
-	FORCEINLINE void SetTranslationXY(const Vector2& InTranslation);
-	FORCEINLINE void SetScale(const Vector3& InScale);
 	FORCEINLINE Matrix3x3 Tranpose() const;
 
 	FORCEINLINE const Vector3& operator[](int InIndex) const;
@@ -46,34 +42,6 @@ FORCEINLINE void Matrix3x3::SetIdentity()
 	Cols[0] = Vector3::UnitX;
 	Cols[1] = Vector3::UnitY;
 	Cols[2] = Vector3::UnitZ;
-}
-
-FORCEINLINE void Matrix3x3::SetRotationXY(float InRadian)
-{
-	Cols[0] = Vector3(cosf(InRadian), sinf(InRadian), 0.f);
-	Cols[1] = Vector3(-sinf(InRadian), cosf(InRadian), 0.f);
-	Cols[2] = Vector3::UnitZ;
-}
-
-FORCEINLINE void Matrix3x3::SetScaleXY(const Vector2& InScale)
-{
-	Cols[0] = Vector3::UnitX * InScale.X;
-	Cols[1] = Vector3::UnitY * InScale.Y;
-	Cols[2] = Vector3::UnitZ;
-}
-
-FORCEINLINE void Matrix3x3::SetTranslationXY(const Vector2& InTranslation)
-{
-	Cols[0] = Vector3::UnitX;
-	Cols[1] = Vector3::UnitY;
-	Cols[2] = Vector3(InTranslation.X, InTranslation.Y, 1.f);
-}
-
-FORCEINLINE void Matrix3x3::SetScale(const Vector3& InScale)
-{
-	Cols[0] = Vector3::UnitX * InScale.X;
-	Cols[1] = Vector3::UnitY * InScale.Y;
-	Cols[2] = Vector3::UnitZ * InScale.Z;
 }
 
 FORCEINLINE Matrix3x3 Matrix3x3::Tranpose() const

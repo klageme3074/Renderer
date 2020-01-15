@@ -10,8 +10,6 @@ public:
 	Matrix2x2(float In00, float In01, float In10, float In11);
 
 	FORCEINLINE void SetIdentity();
-	FORCEINLINE void SetRotation(float InRadian);
-	FORCEINLINE void SetScale(Vector2 InScale);
 	FORCEINLINE Matrix2x2 Tranpose() const;
 
 	FORCEINLINE const Vector2& operator[](int InIndex) const;
@@ -36,19 +34,8 @@ private:
 
 FORCEINLINE void Matrix2x2::SetIdentity()
 {
-	*this = Matrix2x2::Identity;
-}
-
-FORCEINLINE void Matrix2x2::SetRotation(float InRadian)
-{
-	Cols[0] = Vector2(cosf(InRadian), sinf(InRadian));
-	Cols[1] = Vector2(-sinf(InRadian), cosf(InRadian));
-}
-
-FORCEINLINE void Matrix2x2::SetScale(Vector2 InScale)
-{
-	Cols[0] = Vector2::UnitX * InScale.X;
-	Cols[1] = Vector2::UnitY * InScale.Y;
+	Cols[0] = Vector2::UnitX;
+	Cols[1] = Vector2::UnitY;
 }
 
 FORCEINLINE Matrix2x2 Matrix2x2::Tranpose() const
@@ -58,7 +45,6 @@ FORCEINLINE Matrix2x2 Matrix2x2::Tranpose() const
 		Vector2(Cols[0].Y, Cols[1].Y)
 	);
 }
-
 
 FORCEINLINE const Vector2& Matrix2x2::operator[](int InIndex) const
 {

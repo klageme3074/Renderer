@@ -6,12 +6,12 @@ struct Vector2
 {
 public:
 	Vector2() { }
-	constexpr FORCEINLINE Vector2(float InX, float InY) : X(InX), Y(InY) { }
+	FORCEINLINE Vector2(int InX, int InY) : X((float)InX), Y((float)InY) { }
+	FORCEINLINE Vector2(float InX, float InY) : X(InX), Y(InY) { }
 
 	FORCEINLINE float SizeSquared() const;
 	FORCEINLINE float Dot(const Vector2& InV) const;
 	FORCEINLINE Vector2 Normalize() const;
-
 
 	FORCEINLINE bool IsZero() const
 	{

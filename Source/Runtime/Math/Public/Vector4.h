@@ -9,7 +9,7 @@ public:
 	FORCEINLINE Vector4(const Vector2& InV, bool IsPoint = true) : X(InV.X), Y(InV.Y), Z(0.f) { W = IsPoint ? 1.f : 0.f; }
 	FORCEINLINE Vector4(const Vector3& InV, bool IsPoint = true) : X(InV.X), Y(InV.Y), Z(InV.Z) { W = IsPoint ? 1.f : 0.f; }
 	FORCEINLINE Vector4(float InX, float InY, float InZ, float InW) : X(InX), Y(InY), Z(InZ), W(InW) { }
-	FORCEINLINE Vector4(float InX, float InY, float InZ) : X(InX), Y(InY), Z(InZ), W(1.f) { }
+	FORCEINLINE Vector4(float InX, float InY, float InZ, bool IsPoint = true) : X(InX), Y(InY), Z(InZ) { W = IsPoint; }
 
 	FORCEINLINE float SizeSquared() const;
 	FORCEINLINE float Dot(const Vector4& InV) const;
